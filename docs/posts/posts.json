@@ -1,5 +1,20 @@
 [
   {
+    "path": "posts/2019-04-17-sophisticated-analysis/",
+    "title": "Sophisticated Analysis",
+    "description": "Analysis of sophisticated things.",
+    "author": [
+      {
+        "name": "Natalie Lenberger",
+        "url": "https://nlenberger.github.io/projectblog/"
+      }
+    ],
+    "date": "2019-04-17",
+    "categories": [],
+    "preview": "posts/2019-04-17-sophisticated-analysis/sophisticated-analysis_files/figure-html5/unnamed-chunk-1-1.png",
+    "last_modified": "2019-04-17T13:45:14-04:00"
+  },
+  {
     "path": "posts/welcome/",
     "title": "Welcome to Project Blog",
     "description": "Welcome to our new blog, Project Blog. We hope you enjoy \nreading what we have to say!",

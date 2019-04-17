@@ -1,0 +1,66 @@
+---
+title: "Sophisticated Analysis"
+description: |
+  Analysis of sophisticated things.
+author:
+  - name: Natalie Lenberger
+    url: https://nlenberger.github.io/projectblog/
+date: 04-17-2019
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+```{r setup, include=FALSE}
+library(mdsr)
+library(ggplot2)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Placerat duis ultricies lacus sed turpis. Donec et odio pellentesque diam volutpat. Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Viverra maecenas accumsan lacus vel facilisis volutpat est velit egestas. Sed risus ultricies tristique nulla. Est velit egestas dui id ornare arcu odio. Urna condimentum mattis pellentesque id. Molestie ac feugiat sed lectus vestibulum mattis ullamcorper velit sed. Turpis massa sed elementum tempus egestas. Cursus in hac habitasse platea dictumst. Commodo sed egestas egestas fringilla phasellus faucibus scelerisque eleifend donec. Pharetra diam sit amet nisl suscipit adipiscing bibendum est ultricies. Maecenas pharetra convallis posuere morbi leo urna.
+
+Sem integer vitae justo eget magna fermentum iaculis. Mauris cursus mattis molestie a iaculis at. Vitae et leo duis ut. Malesuada fames ac turpis egestas maecenas pharetra convallis posuere morbi. Enim nec dui nunc mattis enim ut tellus elementum. Volutpat odio facilisis mauris sit amet massa vitae. Facilisi etiam dignissim diam quis enim lobortis scelerisque. Et tortor at risus viverra adipiscing. Dolor morbi non arcu risus quis. Nibh praesent tristique magna sit amet purus gravida. Est sit amet facilisis magna etiam. Lacus sed turpis tincidunt id aliquet risus feugiat. Nam aliquam sem et tortor. Sed egestas egestas fringilla phasellus faucibus scelerisque. Tellus molestie nunc non blandit massa enim nec dui nunc. Aenean pharetra magna ac placerat vestibulum lectus mauris. Eget mauris pharetra et ultrices neque ornare aenean. Iaculis at erat pellentesque adipiscing commodo elit at imperdiet. Etiam dignissim diam quis enim. Netus et malesuada fames ac.
+
+Consectetur adipiscing elit pellentesque habitant. Vivamus at augue eget arcu dictum varius. Consequat nisl vel pretium lectus. Lobortis scelerisque fermentum dui faucibus in ornare quam. Praesent semper feugiat nibh sed pulvinar. Malesuada fames ac turpis egestas maecenas pharetra convallis posuere morbi. Bibendum at varius vel pharetra vel turpis nunc eget lorem. Quam lacus suspendisse faucibus interdum posuere lorem ipsum dolor sit. Aliquet sagittis id consectetur purus ut. Tempus iaculis urna id volutpat lacus laoreet.
+
+Felis donec et odio pellentesque diam volutpat commodo sed egestas. Sagittis orci a scelerisque purus semper eget duis at. Vel elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi tristique. In cursus turpis massa tincidunt dui ut ornare. Pulvinar sapien et ligula ullamcorper malesuada proin. Lobortis elementum nibh tellus molestie nunc non blandit massa enim. Fringilla ut morbi tincidunt augue interdum velit euismod in pellentesque. Egestas egestas fringilla phasellus faucibus scelerisque eleifend donec pretium vulputate. Imperdiet nulla malesuada pellentesque elit eget gravida cum sociis natoque. In fermentum posuere urna nec tincidunt praesent semper feugiat nibh. Sodales ut etiam sit amet nisl. Venenatis lectus magna fringilla urna porttitor. Suspendisse ultrices gravida dictum fusce ut. Egestas egestas fringilla phasellus faucibus scelerisque eleifend donec pretium vulputate. Pretium lectus quam id leo. Diam volutpat commodo sed egestas egestas.
+
+A diam sollicitudin tempor id eu nisl. Eu tincidunt tortor aliquam nulla facilisi. Nibh venenatis cras sed felis eget velit aliquet sagittis id. Sit amet consectetur adipiscing elit pellentesque habitant morbi tristique. Rutrum quisque non tellus orci ac. Tortor at auctor urna nunc. Nullam vehicula ipsum a arcu cursus vitae. Ante in nibh mauris cursus mattis. Tincidunt tortor aliquam nulla facilisi cras fermentum. Facilisis gravida neque convallis a cras semper auctor neque vitae.
+
+
+## Analysis
+
+Well here's a plot:
+
+```{r preview = TRUE}
+ggplot(iris, aes(x = Sepal.Width, y = Petal.Length)) +
+  geom_point(aes(color=Species))
+```
+
+
+Here's a table:
+
+```{r}
+iris %>% 
+  group_by(Species) %>% 
+  summarise(mean_Petal_Length = mean(Petal.Length)) %>% 
+  rmarkdown::paged_table()
+```
+
+
+
+## Conclusion
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Placerat duis ultricies lacus sed turpis. Donec et odio pellentesque diam volutpat. Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Viverra maecenas accumsan lacus vel facilisis volutpat est velit egestas. Sed risus ultricies tristique nulla. Est velit egestas dui id ornare arcu odio. Urna condimentum mattis pellentesque id. Molestie ac feugiat sed lectus vestibulum mattis ullamcorper velit sed. Turpis massa sed elementum tempus egestas. Cursus in hac habitasse platea dictumst. Commodo sed egestas egestas fringilla phasellus faucibus scelerisque eleifend donec. Pharetra diam sit amet nisl suscipit adipiscing bibendum est ultricies. Maecenas pharetra convallis posuere morbi leo urna.
+
+Sem integer vitae justo eget magna fermentum iaculis. Mauris cursus mattis molestie a iaculis at. Vitae et leo duis ut. Malesuada fames ac turpis egestas maecenas pharetra convallis posuere morbi. Enim nec dui nunc mattis enim ut tellus elementum. Volutpat odio facilisis mauris sit amet massa vitae. Facilisi etiam dignissim diam quis enim lobortis scelerisque. Et tortor at risus viverra adipiscing. Dolor morbi non arcu risus quis. Nibh praesent tristique magna sit amet purus gravida. Est sit amet facilisis magna etiam. Lacus sed turpis tincidunt id aliquet risus feugiat. Nam aliquam sem et tortor. Sed egestas egestas fringilla phasellus faucibus scelerisque. Tellus molestie nunc non blandit massa enim nec dui nunc. Aenean pharetra magna ac placerat vestibulum lectus mauris. Eget mauris pharetra et ultrices neque ornare aenean. Iaculis at erat pellentesque adipiscing commodo elit at imperdiet. Etiam dignissim diam quis enim. Netus et malesuada fames ac.
+
+Consectetur adipiscing elit pellentesque habitant. Vivamus at augue eget arcu dictum varius. Consequat nisl vel pretium lectus. Lobortis scelerisque fermentum dui faucibus in ornare quam. Praesent semper feugiat nibh sed pulvinar. Malesuada fames ac turpis egestas maecenas pharetra convallis posuere morbi. Bibendum at varius vel pharetra vel turpis nunc eget lorem. Quam lacus suspendisse faucibus interdum posuere lorem ipsum dolor sit. Aliquet sagittis id consectetur purus ut. Tempus iaculis urna id volutpat lacus laoreet.
+
+Felis donec et odio pellentesque diam volutpat commodo sed egestas. Sagittis orci a scelerisque purus semper eget duis at. Vel elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi tristique. In cursus turpis massa tincidunt dui ut ornare. Pulvinar sapien et ligula ullamcorper malesuada proin. Lobortis elementum nibh tellus molestie nunc non blandit massa enim. Fringilla ut morbi tincidunt augue interdum velit euismod in pellentesque. Egestas egestas fringilla phasellus faucibus scelerisque eleifend donec pretium vulputate. Imperdiet nulla malesuada pellentesque elit eget gravida cum sociis natoque. In fermentum posuere urna nec tincidunt praesent semper feugiat nibh. Sodales ut etiam sit amet nisl. Venenatis lectus magna fringilla urna porttitor. Suspendisse ultrices gravida dictum fusce ut. Egestas egestas fringilla phasellus faucibus scelerisque eleifend donec pretium vulputate. Pretium lectus quam id leo. Diam volutpat commodo sed egestas egestas.
+
+A diam sollicitudin tempor id eu nisl. Eu tincidunt tortor aliquam nulla facilisi. Nibh venenatis cras sed felis eget velit aliquet sagittis id. Sit amet consectetur adipiscing elit pellentesque habitant morbi tristique. Rutrum quisque non tellus orci ac. Tortor at auctor urna nunc. Nullam vehicula ipsum a arcu cursus vitae. Ante in nibh mauris cursus mattis. Tincidunt tortor aliquam nulla facilisi cras fermentum. Facilisis gravida neque convallis a cras semper auctor neque vitae.
+
+
