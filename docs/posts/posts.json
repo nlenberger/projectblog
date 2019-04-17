@@ -1,0 +1,17 @@
+[
+  {
+    "path": "posts/welcome/",
+    "title": "Welcome to Project Blog",
+    "description": "Welcome to our new blog, Project Blog. We hope you enjoy \nreading what we have to say!",
+    "author": [
+      {
+        "name": "Nora Jones",
+        "url": "https://example.com/norajones"
+      }
+    ],
+    "date": "2019-04-17",
+    "categories": [],
+    "preview": {},
+    "last_modified": "2019-04-17T13:10:00-04:00"
+  }
+]
