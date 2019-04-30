@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="distill" />
+
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
+
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
+
+  <!--radix_placeholder_meta_tags-->
+  <title>Plotly</title>
+  
+  <meta property="description" itemprop="description" content="A tutorial on using plotly in R."/>
+  
+  
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="2019-04-30"/>
+  <meta property="article:created" itemprop="dateCreated" content="2019-04-30"/>
+  <meta name="article:author" content="Natalie Lenberger"/>
+  
+  <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+  <meta property="og:title" content="Plotly"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:description" content="A tutorial on using plotly in R."/>
+  <meta property="og:locale" content="en_US"/>
+  
+  <!--  https://dev.twitter.com/cards/types/summary -->
+  <meta property="twitter:card" content="summary"/>
+  <meta property="twitter:title" content="Plotly"/>
+  <meta property="twitter:description" content="A tutorial on using plotly in R."/>
+  
+  <!--/radix_placeholder_meta_tags-->
+  <!--radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-rmarkdown-metadata">
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Plotly"]},{"type":"character","attributes":{},"value":["A tutorial on using plotly in R.\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Natalie Lenberger"]},{"type":"character","attributes":{},"value":["https://nlenberger.github.io/projectblog/"]}]}]},{"type":"character","attributes":{},"value":["04-30-2019"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
+  </script>
+  <!--/radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["plotly_files/bowser-1.9.3/bowser.min.js","plotly_files/crosstalk-1.0.0/css/crosstalk.css","plotly_files/crosstalk-1.0.0/js/crosstalk.js","plotly_files/crosstalk-1.0.0/js/crosstalk.js.map","plotly_files/crosstalk-1.0.0/js/crosstalk.min.js","plotly_files/crosstalk-1.0.0/js/crosstalk.min.js.map","plotly_files/distill-2.2.21/template.v2.js","plotly_files/htmlwidgets-1.3/htmlwidgets.js","plotly_files/jquery-1.11.3/jquery-AUTHORS.txt","plotly_files/jquery-1.11.3/jquery.js","plotly_files/jquery-1.11.3/jquery.min.js","plotly_files/jquery-1.11.3/jquery.min.map","plotly_files/plotly-binding-4.9.0/plotly.js","plotly_files/plotly-htmlwidgets-css-1.46.1/plotly-htmlwidgets.css","plotly_files/plotly-main-1.46.1/plotly-latest.min.js","plotly_files/typedarray-0.1/typedarray.min.js","plotly_files/webcomponents-2.0.0/webcomponents.js"]}
+  </script>
+  <!--radix_placeholder_navigation_in_header-->
+  <!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+  
+  <style type="text/css">
+  
+  body {
+    background-color: white;
+  }
+  
+  .pandoc-table {
+    width: 100%;
+  }
+  
+  .pandoc-table>caption {
+    margin-bottom: 10px;
+  }
+  
+  .pandoc-table th:not([align]) {
+    text-align: left;
+  }
+  
+  .pagedtable-footer {
+    font-size: 15px;
+  }
+  
+  .html-widget {
+    margin-bottom: 2.0em;
+  }
+  
+  .l-screen-inset {
+    padding-right: 16px;
+  }
+  
+  .l-screen .caption {
+    margin-left: 10px;
+  }
+  
+  .shaded {
+    background: rgb(247, 247, 247);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .shaded .html-widget {
+    margin-bottom: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .shaded .shaded-content {
+    background: white;
+  }
+  
+  .text-output {
+    margin-top: 0;
+    line-height: 1.5em;
+  }
+  
+  .hidden {
+    display: none !important;
+  }
+  
+  d-article {
+    padding-bottom: 30px;
+  }
+  
+  d-appendix {
+    padding-top: 30px;
+  }
+  
+  d-article>p>img {
+    width: 100%;
+  }
+  
+  d-article iframe {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 2.0em;
+    width: 100%;
+  }
+  
+  figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+  
+  /* CSS for table of contents */
+  
+  .d-toc {
+    color: rgba(0,0,0,0.8);
+    font-size: 0.8em;
+    line-height: 1em;
+  }
+  
+  .d-toc-header {
+    font-size: 0.6rem;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.5);
+    text-transform: uppercase;
+    margin-top: 0;
+    margin-bottom: 1.3em;
+  }
+  
+  .d-toc a {
+    border-bottom: none;
+  }
+  
+  .d-toc ul {
+    padding-left: 0;
+  }
+  
+  .d-toc li>ul {
+    padding-top: 0.8em;
+    padding-left: 16px;
+    margin-bottom: 0.6em;
+  }
+  
+  .d-toc ul,
+  .d-toc li {
+    list-style-type: none;
+  }
+  
+  .d-toc li {
+    margin-bottom: 0.9em;
+  }
+  
+  .d-toc-separator {
+    margin-top: 20px;
+    margin-bottom: 2em;
+  }
+  
+  .d-article-with-toc {
+    border-top: none;
+    padding-top: 0;
+  }
+  
+  
+  
+  /* Tweak code blocks (note that this CSS is repeated above in an injection
+     into the d-code shadow dom) */
+  
+  d-code {
+    overflow-x: auto !important;
+  }
+  
+  pre.d-code code.d-code {
+    padding-left: 10px;
+    font-size: 12px;
+    border-left: 2px solid rgba(0,0,0,0.1);
+  }
+  
+  pre.text-output {
+  
+    font-size: 12px;
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+  
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+  
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+  
+  @media(min-width: 768px) {
+  
+  d-code {
+    overflow-x: visible !important;
+  }
+  
+  pre.d-code code.d-code  {
+      padding-left: 18px;
+      font-size: 14px;
+  }
+  pre.text-output {
+    font-size: 14px;
+  }
+  }
+  
+  /* Figure */
+  
+  .figure {
+    position: relative;
+    margin-bottom: 2.5em;
+    margin-top: 1.5em;
+  }
+  
+  .figure img {
+    width: 100%;
+  }
+  
+  .figure .caption {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 12px;
+    line-height: 1.5em;
+  }
+  
+  .figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+  
+  .figure .caption a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+  
+  .figure .caption b,
+  .figure .caption strong, {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1.0);
+  }
+  
+  
+  
+  /* Tweak 1000px media break to show more text */
+  
+  @media(min-width: 1000px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 16px;
+    }
+  
+    .grid {
+      grid-column-gap: 16px;
+    }
+  
+    d-article {
+      font-size: 1.06rem;
+      line-height: 1.7em;
+    }
+    figure .caption, .figure .caption, figure figcaption {
+      font-size: 13px;
+    }
+  }
+  
+  @media(min-width: 1180px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 32px;
+    }
+  
+    .grid {
+      grid-column-gap: 32px;
+    }
+  }
+  
+  
+  /* Get the citation styles for the appendix (not auto-injected on render since
+     we do our own rendering of the citation appendix) */
+  
+  d-appendix .citation-appendix,
+  .d-appendix .citation-appendix {
+    font-size: 11px;
+    line-height: 15px;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 18px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.02);
+    padding: 10px 18px;
+    border-radius: 3px;
+    color: rgba(150, 150, 150, 1);
+    overflow: hidden;
+    margin-top: -12px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  
+  
+  /* Social footer */
+  
+  .social_footer {
+    margin-top: 30px;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.67);
+  }
+  
+  .disqus-comments {
+    margin-right: 30px;
+  }
+  
+  .disqus-comment-count {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+  }
+  
+  #disqus_thread {
+    margin-top: 30px;
+  }
+  
+  .article-sharing a {
+    border-bottom: none;
+    margin-right: 8px;
+  }
+  
+  .article-sharing a:hover {
+    border-bottom: none;
+  }
+  
+  .sidebar-section.subscribe {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+  
+  .subscribe p {
+    margin-bottom: 0.5em;
+  }
+  
+  
+  .article-footer .subscribe {
+    font-size: 15px;
+    margin-top: 45px;
+  }
+  
+  
+  /* Improve display for browsers without grid (IE/Edge <= 15) */
+  
+  .downlevel {
+    line-height: 1.6em;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+  }
+  
+  .downlevel .d-title {
+    padding-top: 6rem;
+    padding-bottom: 1.5rem;
+  }
+  
+  .downlevel .d-title h1 {
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 1.1em;
+    margin: 0 0 0.5rem;
+  }
+  
+  .downlevel .d-title p {
+    font-weight: 300;
+    font-size: 1.2rem;
+    line-height: 1.55em;
+    margin-top: 0;
+  }
+  
+  .downlevel .d-byline {
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    font-size: 0.8rem;
+    line-height: 1.8em;
+  }
+  
+  .downlevel .section-separator {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .downlevel .d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+  
+  
+  .downlevel .d-appendix {
+    padding-left: 0;
+    padding-right: 0;
+    max-width: none;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.5);
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+  
+  .downlevel .footnotes ol {
+    padding-left: 13px;
+  }
+  
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+  
+  @media(min-width: 768px) {
+    .downlevel .base-grid,
+    .downlevel .distill-header,
+    .downlevel .d-title,
+    .downlevel .d-abstract,
+    .downlevel .d-article,
+    .downlevel .d-appendix,
+    .downlevel .distill-appendix,
+    .downlevel .d-byline,
+    .downlevel .d-footnote-list,
+    .downlevel .d-citation-list,
+    .downlevel .distill-footer,
+    .downlevel .appendix-bottom,
+    .downlevel .posts-container {
+    padding-left: 150px;
+    padding-right: 150px;
+    max-width: 900px;
+  }
+  }
+  
+  .downlevel pre code {
+    display: block;
+    border-left: 2px solid rgba(0, 0, 0, .1);
+    padding: 0 0 0 20px;
+    font-size: 14px;
+  }
+  
+  .downlevel code, .downlevel pre {
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+  
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+  
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+  
+  </style>
+  
+  <script type="application/javascript">
+  
+  function is_downlevel_browser() {
+    if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                   window.navigator.userAgent)) {
+      return true;
+    } else {
+      return window.load_distill_framework === undefined;
+    }
+  }
+  
+  // show body when load is complete
+  function on_load_complete() {
+  
+    // set body to visible
+    document.body.style.visibility = 'visible';
+  
+    // force redraw for leaflet widgets
+    if (window.HTMLWidgets) {
+      var maps = window.HTMLWidgets.findAll(".leaflet");
+      $.each(maps, function(i, el) {
+        var map = this.getMap();
+        map.invalidateSize();
+        map.eachLayer(function(layer) {
+          if (layer instanceof L.TileLayer)
+            layer.redraw();
+        });
+      });
+    }
+  
+    // trigger 'shown' so htmlwidgets resize
+    $('d-article').trigger('shown');
+  }
+  
+  function init_distill() {
+  
+    init_common();
+  
+    // create front matter
+    var front_matter = $('<d-front-matter></d-front-matter>');
+    $('#distill-front-matter').wrap(front_matter);
+  
+    // create d-title
+    $('.d-title').changeElementType('d-title');
+  
+    // create d-byline
+    var byline = $('<d-byline></d-byline>');
+    $('.d-byline').replaceWith(byline);
+  
+    // create d-article
+    var article = $('<d-article></d-article>');
+    $('.d-article').wrap(article).children().unwrap();
+  
+    // move posts container into article
+    $('.posts-container').appendTo($('d-article'));
+  
+    // create d-appendix
+    $('.d-appendix').changeElementType('d-appendix');
+  
+    // create d-bibliography
+    var bibliography = $('<d-bibliography></d-bibliography>');
+    $('#distill-bibliography').wrap(bibliography);
+  
+    // flag indicating that we have appendix items
+    var appendix = $('.appendix-bottom').children('h3').length > 0;
+  
+    // replace citations with <d-cite>
+    $('.citation').each(function(i, val) {
+      appendix = true;
+      var cites = $(this).attr('data-cites').split(" ");
+      var dt_cite = $('<d-cite></d-cite>');
+      dt_cite.attr('key', cites.join());
+      $(this).replaceWith(dt_cite);
+    });
+    // remove refs
+    $('#refs').remove();
+  
+    // replace footnotes with <d-footnote>
+    $('.footnote-ref').each(function(i, val) {
+      appendix = true;
+      var href = $(this).attr('href');
+      var id = href.replace('#', '');
+      var fn = $('#' + id);
+      var fn_p = $('#' + id + '>p');
+      fn_p.find('.footnote-back').remove();
+      var text = fn_p.html();
+      var dtfn = $('<d-footnote></d-footnote>');
+      dtfn.html(text);
+      $(this).replaceWith(dtfn);
+    });
+    // remove footnotes
+    $('.footnotes').remove();
+  
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      var id = $(this).attr('id');
+      $('.d-toc a[href="#' + id + '"]').parent().remove();
+      appendix = true;
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+    });
+  
+    // show d-appendix if we have appendix content
+    $("d-appendix").css('display', appendix ? 'grid' : 'none');
+  
+    // replace code blocks with d-code
+    $('pre>code').each(function(i, val) {
+      var code = $(this);
+      var pre = code.parent();
+      var clz = "";
+      var language = pre.attr('class');
+      if (language) {
+        // map unknown languages to "clike" (without this they just dissapear)
+        if ($.inArray(language, ["bash", "clike", "css", "go", "html",
+                                 "javascript", "js", "julia", "lua", "markdown",
+                                 "markup", "mathml", "python", "svg", "xml"]) == -1)
+          language = "clike";
+        language = ' language="' + language + '"';
+        var dt_code = $('<d-code block' + language + clz + '></d-code>');
+        dt_code.text(code.text());
+        pre.replaceWith(dt_code);
+      } else {
+        code.addClass('text-output').unwrap().changeElementType('pre');
+      }
+    });
+  
+    // localize layout chunks to just output
+    $('.layout-chunk').each(function(i, val) {
+  
+      // capture layout
+      var layout = $(this).attr('data-layout');
+  
+      // apply layout to markdown level block elements
+      var elements = $(this).children().not('d-code, pre.text-output, script');
+      elements.each(function(i, el) {
+        var layout_div = $('<div class="' + layout + '"></div>');
+        if (layout_div.hasClass('shaded')) {
+          var shaded_content = $('<div class="shaded-content"></div>');
+          $(this).wrap(shaded_content);
+          $(this).parent().wrap(layout_div);
+        } else {
+          $(this).wrap(layout_div);
+        }
+      });
+  
+  
+      // unwrap the layout-chunk div
+      $(this).children().unwrap();
+    });
+  
+    // load distill framework
+    load_distill_framework();
+  
+    // wait for window.distillRunlevel == 4 to do post processing
+    function distill_post_process() {
+  
+      if (!window.distillRunlevel || window.distillRunlevel < 4)
+        return;
+  
+      // hide author/affiliations entirely if we have no authors
+      var front_matter = JSON.parse($("#distill-front-matter").html());
+      var have_authors = front_matter.authors && front_matter.authors.length > 0;
+      if (!have_authors)
+        $('d-byline').addClass('hidden');
+  
+      // table of contents
+      if (have_authors) // adjust border if we are in authors
+        $('.d-toc').parent().addClass('d-article-with-toc');
+  
+      // strip links that point to #
+      $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+  
+      // hide elements of author/affiliations grid that have no value
+      function hide_byline_column(caption) {
+        $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+      }
+  
+      // affiliations
+      var have_affiliations = false;
+      for (var i = 0; i<front_matter.authors.length; ++i) {
+        var author = front_matter.authors[i];
+        if (author.affiliation !== "&nbsp;") {
+          have_affiliations = true;
+          break;
+        }
+      }
+      if (!have_affiliations)
+        $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+  
+      // published date
+      if (!front_matter.publishedDate)
+        hide_byline_column("Published");
+  
+      // document object identifier
+      var doi = $('d-byline').find('h3:contains("DOI")');
+      var doi_p = doi.next().empty();
+      if (!front_matter.doi) {
+        // if we have a citation and valid citationText then link to that
+        if ($('#citation').length > 0 && front_matter.citationText) {
+          doi.html('Citation');
+          $('<a href="#citation"></a>')
+            .text(front_matter.citationText)
+            .appendTo(doi_p);
+        } else {
+          hide_byline_column("DOI");
+        }
+      } else {
+        $('<a></a>')
+           .attr('href', "https://doi.org/" + front_matter.doi)
+           .html(front_matter.doi)
+           .appendTo(doi_p);
+      }
+  
+       // change plural form of authors/affiliations
+      if (front_matter.authors.length === 1) {
+        var grid = $('.authors-affiliations');
+        grid.children('h3:contains("Authors")').text('Author');
+        grid.children('h3:contains("Affiliations")').text('Affiliation');
+      }
+  
+      // inject pre code styles (can't do this with a global stylesheet b/c a shadow root is used)
+      $('d-code').each(function(i, val) {
+        var style = document.createElement('style');
+        style.innerHTML = 'pre code { padding-left: 10px; font-size: 12px; border-left: 2px solid rgba(0,0,0,0.1); } ' +
+                          '@media(min-width: 768px) { pre code { padding-left: 18px; font-size: 14px; } }';
+        if (this.shadowRoot)
+          this.shadowRoot.appendChild(style);
+      });
+  
+      // move appendix-bottom entries to the bottom
+      $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+      $('.appendix-bottom').remove();
+  
+      // clear polling timer
+      clearInterval(tid);
+  
+      // show body now that everything is ready
+      on_load_complete();
+    }
+  
+    var tid = setInterval(distill_post_process, 50);
+    distill_post_process();
+  
+  }
+  
+  function init_downlevel() {
+  
+    init_common();
+  
+     // insert hr after d-title
+    $('.d-title').after($('<hr class="section-separator"/>'));
+  
+    // check if we have authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+  
+    // manage byline/border
+    if (!have_authors)
+      $('.d-byline').remove();
+    $('.d-byline').after($('<hr class="section-separator"/>'));
+    $('.d-byline a').remove();
+  
+    // remove toc
+    $('.d-toc-header').remove();
+    $('.d-toc').remove();
+    $('.d-toc-separator').remove();
+  
+    // move appendix elements
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+    });
+  
+  
+    // inject headers into references and footnotes
+    var refs_header = $('<h3></h3>');
+    refs_header.text('References');
+    $('#refs').prepend(refs_header);
+  
+    var footnotes_header = $('<h3></h3');
+    footnotes_header.text('Footnotes');
+    $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+  
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+  
+    // remove appendix if it's empty
+    if ($('.d-appendix').children().length === 0)
+      $('.d-appendix').remove();
+  
+    // prepend separator above appendix
+    $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+  
+    // trim code
+    $('pre>code').each(function(i, val) {
+      $(this).html($.trim($(this).html()));
+    });
+  
+    // move posts-container right before article
+    $('.posts-container').insertBefore($('.d-article'));
+  
+    $('body').addClass('downlevel');
+  
+    on_load_complete();
+  }
+  
+  
+  function init_common() {
+  
+    // jquery plugin to change element types
+    (function($) {
+      $.fn.changeElementType = function(newType) {
+        var attrs = {};
+  
+        $.each(this[0].attributes, function(idx, attr) {
+          attrs[attr.nodeName] = attr.nodeValue;
+        });
+  
+        this.replaceWith(function() {
+          return $("<" + newType + "/>", attrs).append($(this).contents());
+        });
+      };
+    })(jQuery);
+  
+    // prevent underline for linked images
+    $('a > img').parent().css({'border-bottom' : 'none'});
+  
+    // mark non-body figures created by knitr chunks as 100% width
+    $('.layout-chunk').each(function(i, val) {
+      var figures = $(this).find('img, .html-widget');
+      if ($(this).attr('data-layout') !== "l-body") {
+        figures.css('width', '100%');
+      } else {
+        figures.css('max-width', '100%');
+        figures.filter("[width]").each(function(i, val) {
+          var fig = $(this);
+          fig.css('width', fig.attr('width') + 'px');
+        });
+  
+      }
+    });
+  
+    // auto-append index.html to post-preview links in file: protocol
+    // and in rstudio ide preview
+    $('.post-preview').each(function(i, val) {
+      if (window.location.protocol === "file:")
+        $(this).attr('href', $(this).attr('href') + "index.html");
+    });
+  
+    // get rid of index.html references in header
+    if (window.location.protocol !== "file:") {
+      $('.distill-site-header a[href]').each(function(i,val) {
+        $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
+      });
+    }
+  
+    // add class to pandoc style tables
+    $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+    $('.kable-table').children('table').addClass('pandoc-table');
+  
+    // add figcaption style to table captions
+    $('caption').parent('table').addClass("figcaption");
+  
+    // initialize posts list
+    if (window.init_posts_list)
+      window.init_posts_list();
+  
+    // implmement disqus comment link
+    $('.disqus-comment-count').click(function() {
+      window.headroom_prevent_pin = true;
+      $('#disqus_thread').toggleClass('hidden');
+      if (!$('#disqus_thread').hasClass('hidden')) {
+        var offset = $(this).offset();
+        $(window).resize();
+        $('html, body').animate({
+          scrollTop: offset.top - 35
+        });
+      }
+    });
+  }
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    if (is_downlevel_browser())
+      init_downlevel();
+    else
+      window.addEventListener('WebComponentsReady', init_distill);
+  });
+  
+  </script>
+  
+  <!--/radix_placeholder_distill-->
+  <script src="plotly_files/htmlwidgets-1.3/htmlwidgets.js"></script>
+  <script src="plotly_files/plotly-binding-4.9.0/plotly.js"></script>
+  <script src="plotly_files/typedarray-0.1/typedarray.min.js"></script>
+  <script src="plotly_files/jquery-1.11.3/jquery.min.js"></script>
+  <link href="plotly_files/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+  <script src="plotly_files/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+  <link href="plotly_files/plotly-htmlwidgets-css-1.46.1/plotly-htmlwidgets.css" rel="stylesheet" />
+  <script src="plotly_files/plotly-main-1.46.1/plotly-latest.min.js"></script>
+  <script src="plotly_files/bowser-1.9.3/bowser.min.js"></script>
+  <script src="plotly_files/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="plotly_files/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+  <!--/radix_placeholder_site_in_header-->
+
+
+</head>
+
+<body>
+
+<!--radix_placeholder_front_matter-->
+
+<script id="distill-front-matter" type="text/json">
+{"title":"Plotly","description":"A tutorial on using plotly in R.","authors":[{"author":"Natalie Lenberger","authorURL":"https://nlenberger.github.io/projectblog/","affiliation":"&nbsp;","affiliationURL":"#"}],"publishedDate":"2019-04-30T00:00:00.000-04:00","citationText":"Lenberger, 2019"}
+</script>
+
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="d-title">
+<h1>Plotly</h1>
+<p>A tutorial on using plotly in R.</p>
+</div>
+
+<div class="d-byline">
+  Natalie Lenberger <a href="https://nlenberger.github.io/projectblog/" class="uri">https://nlenberger.github.io/projectblog/</a> 
+  
+<br/>04-30-2019
+</div>
+
+<div class="d-article">
+<h2 id="overview">Overview</h2>
+<p>This tutorial will teach you about installing and using the package plotly in R. There are a few ways in which you might create graphics using plotly:</p>
+<ul>
+<li><p>directly instalizing a plotly object using <code>plot_ly()</code>, <code>plot_geo()</code>, or <code>plot_mapbox()</code></p></li>
+<li><p>transforming a ggplot2 graphic into a plotly object using <code>ggplotly()</code></p></li>
+</ul>
+<p>This tutorial will only cover directly instalizing a plotly object.</p>
+<p>In order to adequately teach you about this package, we will need some data. This tutorial will take you through examples using the babynames data from the packaged babynames.</p>
+<h2 id="installation">Installation</h2>
+<p>Before you get started you must first install the package plotly.</p>
+<p>This can be done using the following code:</p>
+<p><code>install.packages(&quot;plotly&quot;)</code></p>
+<p>In order to learn about</p>
+<p>You might also want to install the package babynames in order to follow along with these examples. Or, if you have your own data you want to apply these examples to, that is fine as well.</p>
+<p>This can be done using the following code:</p>
+<p><code>install.packages(&quot;babynames&quot;)</code></p>
+<h2 id="intro-to-plot_ly">Intro to <code>plot_ly()</code></h2>
+<p>First, let’s load the plotly R package</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+library(plotly)</code></pre>
+</div>
+<p><code>When you start to assign variable names to visual properties within</code>plot_ly()`, it tries to find a sensible geometric representation of the info.</p>
+<p>For these next few examples, we will look at just the name “Reece” from the babynames package and keep the graphics basic in order to understand what is happening.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+babydata &lt;- babynames %&gt;% 
+  filter(name == &quot;Reece&quot;) %&gt;% 
+  select(name, sex, year, prop) </code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+plot_ly(babydata, x = ~sex)</code></pre>
+<div id="htmlwidget-40f40277e8bd9077ccbb" style="width:624px;height:384px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-40f40277e8bd9077ccbb">{"x":{"visdat":{"45840a6ea9c":["function () ","plotlyVisDat"]},"cur_data":"45840a6ea9c","attrs":{"45840a6ea9c":{"x":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20]}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"sex","type":"category","categoryorder":"array","categoryarray":["F","M"]},"yaxis":{"domain":[0,1],"automargin":true},"hovermode":"closest","showlegend":false},"source":"A","config":{"showSendToCloud":false},"data":[{"x":["M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M"],"type":"histogram","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+plot_ly(babydata, x = ~sex, y = ~prop)</code></pre>
+<div id="htmlwidget-ad5e87de2c95708ad94c" style="width:624px;height:384px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ad5e87de2c95708ad94c">{"x":{"visdat":{"45820c67071":["function () ","plotlyVisDat"]},"cur_data":"45820c67071","attrs":{"45820c67071":{"x":{},"y":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20]}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"sex","type":"category","categoryorder":"array","categoryarray":["F","M"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"prop"},"hovermode":"closest","showlegend":false},"source":"A","config":{"showSendToCloud":false},"data":[{"x":["M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M"],"y":[4.223e-05,8.312e-05,4.917e-05,8.891e-05,4.888e-05,7.762e-05,8.233e-05,5.389e-05,4.576e-05,3.804e-05,4.131e-05,3.948e-05,4.542e-05,3.701e-05,4.325e-05,5.273e-05,5.413e-05,4.189e-05,4.859e-05,3.153e-05,4.208e-05,5.654e-05,4.796e-05,4.557e-05,4.209e-05,4.476e-05,3.366e-05,4.768e-05,5.741e-05,4.482e-05,3.719e-05,4.038e-05,3.27e-05,3.691e-05,4.532e-05,3.797e-05,4.106e-05,3.474e-05,3.928e-05,3.529e-05,4.119e-05,3.612e-05,2.833e-05,4.207e-05,3.072e-05,3.529e-05,3.579e-05,3.647e-05,3.195e-05,2.195e-05,2.552e-05,2.736e-05,2.277e-05,1.913e-05,1.989e-05,1.306e-05,2.304e-05,2.115e-05,1.879e-05,1.723e-05,1.795e-05,1.165e-05,1.319e-05,1.098e-05,1.266e-05,1.799e-05,1.064e-05,1.244e-05,1.212e-05,1.417e-05,1.3e-05,1.339e-05,1.339e-05,9.74e-06,9.04e-06,1.065e-05,1.134e-05,1.741e-05,2.145e-05,1.348e-05,1.745e-05,1.585e-05,1.889e-05,1.98e-05,2.15e-05,1.92e-05,1.042e-05,1.417e-05,1.653e-05,1.579e-05,9.36e-06,1.842e-05,2.21e-05,1.665e-05,2.12e-05,2.254e-05,2.718e-05,3.483e-05,5.57e-05,5.899e-05,7.595e-05,6.681e-05,7.67e-05,7.833e-05,0.00010292,0.00010654,3.08e-06,0.00012365,5.73e-06,0.00012929,1.461e-05,0.00012778,1.781e-05,0.0001467,2.219e-05,0.00023925,4.008e-05,0.00027669,5.113e-05,0.00031618,5.252e-05,0.0003855,7.7e-05,0.00037763,8.976e-05,0.00036047,0.0001086,0.00032904,0.00010749,0.00036641,0.00010866,0.0003186,0.00011963,0.00030541,0.00011726,0.00032867,0.00013248,0.00030864,0.00010315,0.000307,0.00011421,0.00030366,0.00010226,0.00027494,0.00011695,0.00025288,0.00011119,0.00025044,9.202e-05,0.00024137,9.127e-05,0.00023541,8.48e-05,0.00023226],"type":"bar","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<p>You can then begin to manipulate the graphic by changing the color</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+plot_ly(babydata, x = ~sex, y = ~prop, color= I(&quot;red&quot;), stroke = I(&quot;black&quot;))</code></pre>
+<div id="htmlwidget-ed95aad1dc691e10a47c" style="width:624px;height:384px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ed95aad1dc691e10a47c">{"x":{"visdat":{"4581a3d0712":["function () ","plotlyVisDat"]},"cur_data":"4581a3d0712","attrs":{"4581a3d0712":{"x":{},"y":{},"color":["red"],"stroke":["black"],"alpha_stroke":1,"sizes":[10,100],"spans":[1,20]}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"sex","type":"category","categoryorder":"array","categoryarray":["F","M"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"prop"},"hovermode":"closest","showlegend":false},"source":"A","config":{"showSendToCloud":false},"data":[{"x":["M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M"],"y":[4.223e-05,8.312e-05,4.917e-05,8.891e-05,4.888e-05,7.762e-05,8.233e-05,5.389e-05,4.576e-05,3.804e-05,4.131e-05,3.948e-05,4.542e-05,3.701e-05,4.325e-05,5.273e-05,5.413e-05,4.189e-05,4.859e-05,3.153e-05,4.208e-05,5.654e-05,4.796e-05,4.557e-05,4.209e-05,4.476e-05,3.366e-05,4.768e-05,5.741e-05,4.482e-05,3.719e-05,4.038e-05,3.27e-05,3.691e-05,4.532e-05,3.797e-05,4.106e-05,3.474e-05,3.928e-05,3.529e-05,4.119e-05,3.612e-05,2.833e-05,4.207e-05,3.072e-05,3.529e-05,3.579e-05,3.647e-05,3.195e-05,2.195e-05,2.552e-05,2.736e-05,2.277e-05,1.913e-05,1.989e-05,1.306e-05,2.304e-05,2.115e-05,1.879e-05,1.723e-05,1.795e-05,1.165e-05,1.319e-05,1.098e-05,1.266e-05,1.799e-05,1.064e-05,1.244e-05,1.212e-05,1.417e-05,1.3e-05,1.339e-05,1.339e-05,9.74e-06,9.04e-06,1.065e-05,1.134e-05,1.741e-05,2.145e-05,1.348e-05,1.745e-05,1.585e-05,1.889e-05,1.98e-05,2.15e-05,1.92e-05,1.042e-05,1.417e-05,1.653e-05,1.579e-05,9.36e-06,1.842e-05,2.21e-05,1.665e-05,2.12e-05,2.254e-05,2.718e-05,3.483e-05,5.57e-05,5.899e-05,7.595e-05,6.681e-05,7.67e-05,7.833e-05,0.00010292,0.00010654,3.08e-06,0.00012365,5.73e-06,0.00012929,1.461e-05,0.00012778,1.781e-05,0.0001467,2.219e-05,0.00023925,4.008e-05,0.00027669,5.113e-05,0.00031618,5.252e-05,0.0003855,7.7e-05,0.00037763,8.976e-05,0.00036047,0.0001086,0.00032904,0.00010749,0.00036641,0.00010866,0.0003186,0.00011963,0.00030541,0.00011726,0.00032867,0.00013248,0.00030864,0.00010315,0.000307,0.00011421,0.00030366,0.00010226,0.00027494,0.00011695,0.00025288,0.00011119,0.00025044,9.202e-05,0.00024137,9.127e-05,0.00023541,8.48e-05,0.00023226],"type":"bar","marker":{"color":"rgba(255,0,0,1)","line":{"color":"rgba(0,0,0,1)","width":1}},"error_y":{"color":"rgba(255,0,0,1)","thickness":1},"error_x":{"color":"rgba(255,0,0,1)","thickness":1},"textfont":{"color":"rgba(255,0,0,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<p>Without the <code>I()</code> function, you will not obtain expect/desired results. This is because the arguments map data values to a visual range by default.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+plot_ly(babydata, x = ~sex, y = ~prop, color = &quot;red&quot;)</code></pre>
+<div id="htmlwidget-b2fc44c4b2a854953178" style="width:624px;height:384px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b2fc44c4b2a854953178">{"x":{"visdat":{"458237811e0":["function () ","plotlyVisDat"]},"cur_data":"458237811e0","attrs":{"458237811e0":{"x":{},"y":{},"color":"red","alpha_stroke":1,"sizes":[10,100],"spans":[1,20]}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"sex","type":"category","categoryorder":"array","categoryarray":["F","M"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"prop"},"hovermode":"closest","showlegend":false},"source":"A","config":{"showSendToCloud":false},"data":[{"x":["M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M"],"y":[4.223e-05,8.312e-05,4.917e-05,8.891e-05,4.888e-05,7.762e-05,8.233e-05,5.389e-05,4.576e-05,3.804e-05,4.131e-05,3.948e-05,4.542e-05,3.701e-05,4.325e-05,5.273e-05,5.413e-05,4.189e-05,4.859e-05,3.153e-05,4.208e-05,5.654e-05,4.796e-05,4.557e-05,4.209e-05,4.476e-05,3.366e-05,4.768e-05,5.741e-05,4.482e-05,3.719e-05,4.038e-05,3.27e-05,3.691e-05,4.532e-05,3.797e-05,4.106e-05,3.474e-05,3.928e-05,3.529e-05,4.119e-05,3.612e-05,2.833e-05,4.207e-05,3.072e-05,3.529e-05,3.579e-05,3.647e-05,3.195e-05,2.195e-05,2.552e-05,2.736e-05,2.277e-05,1.913e-05,1.989e-05,1.306e-05,2.304e-05,2.115e-05,1.879e-05,1.723e-05,1.795e-05,1.165e-05,1.319e-05,1.098e-05,1.266e-05,1.799e-05,1.064e-05,1.244e-05,1.212e-05,1.417e-05,1.3e-05,1.339e-05,1.339e-05,9.74e-06,9.04e-06,1.065e-05,1.134e-05,1.741e-05,2.145e-05,1.348e-05,1.745e-05,1.585e-05,1.889e-05,1.98e-05,2.15e-05,1.92e-05,1.042e-05,1.417e-05,1.653e-05,1.579e-05,9.36e-06,1.842e-05,2.21e-05,1.665e-05,2.12e-05,2.254e-05,2.718e-05,3.483e-05,5.57e-05,5.899e-05,7.595e-05,6.681e-05,7.67e-05,7.833e-05,0.00010292,0.00010654,3.08e-06,0.00012365,5.73e-06,0.00012929,1.461e-05,0.00012778,1.781e-05,0.0001467,2.219e-05,0.00023925,4.008e-05,0.00027669,5.113e-05,0.00031618,5.252e-05,0.0003855,7.7e-05,0.00037763,8.976e-05,0.00036047,0.0001086,0.00032904,0.00010749,0.00036641,0.00010866,0.0003186,0.00011963,0.00030541,0.00011726,0.00032867,0.00013248,0.00030864,0.00010315,0.000307,0.00011421,0.00030366,0.00010226,0.00027494,0.00011695,0.00025288,0.00011119,0.00025044,9.202e-05,0.00024137,9.127e-05,0.00023541,8.48e-05,0.00023226],"type":"bar","name":"red","marker":{"color":"rgba(252,141,98,1)","line":{"color":"rgba(252,141,98,1)"}},"textfont":{"color":"rgba(252,141,98,1)"},"error_y":{"color":"rgba(252,141,98,1)"},"error_x":{"color":"rgba(252,141,98,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<h2 id="modifying-plot_ly-graphics">Modifying <code>plot_ly</code> graphics</h2>
+<p>The plotly package takes a functional approach; modification of a plotly graphic is determined by the input values to a function.</p>
+<p>In the below graphic, the function <code>layout()</code> is anticipating a plotly object for the first argument. The following arguments add or modify the layout components.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+layout(
+  plot_ly(babydata, x = ~sex),
+  title = &quot;Histogram for the name Reece&quot;
+)</code></pre>
+<div id="htmlwidget-8a1dcec0e5fa95fdadf7" style="width:624px;height:384px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8a1dcec0e5fa95fdadf7">{"x":{"visdat":{"4585685c40f":["function () ","plotlyVisDat"]},"cur_data":"4585685c40f","attrs":{"4585685c40f":{"x":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20]}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Histogram for the name Reece","xaxis":{"domain":[0,1],"automargin":true,"title":"sex","type":"category","categoryorder":"array","categoryarray":["F","M"]},"yaxis":{"domain":[0,1],"automargin":true},"hovermode":"closest","showlegend":false},"source":"A","config":{"showSendToCloud":false},"data":[{"x":["M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M"],"type":"histogram","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<p>This could start to get out of hand when you start wanting to make numerous modifications. For that reason, the pipe operator, <code>%&gt;%</code>, should be used when making modifications. This will also make it easier for other people to follow.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+babydata %&gt;% 
+  plot_ly(x = ~sex) %&gt;% 
+  layout(title = &quot;Histogram for the name Reece&quot;)</code></pre>
+<div id="htmlwidget-ac59b06a900a2c573779" style="width:624px;height:384px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ac59b06a900a2c573779">{"x":{"visdat":{"458400bf406":["function () ","plotlyVisDat"]},"cur_data":"458400bf406","attrs":{"458400bf406":{"x":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20]}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Histogram for the name Reece","xaxis":{"domain":[0,1],"automargin":true,"title":"sex","type":"category","categoryorder":"array","categoryarray":["F","M"]},"yaxis":{"domain":[0,1],"automargin":true},"hovermode":"closest","showlegend":false},"source":"A","config":{"showSendToCloud":false},"data":[{"x":["M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M"],"type":"histogram","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<p>There are several other modification functions that can be used in the plotly package in order to add a graphical layer to a plot.</p>
+<p>A few of these include: * <code>add_histogram()</code> * <code>add_bars()</code> * <code>add_lines()</code> * <code>add_text()</code> * <code>add_boxplot()</code> * <code>add_markers()  *</code>add_paths()` ….and many more!</p>
+<p>For most graphics you create, you will want to combine several of these graphical layers. When doing that, keep in mind that any argument specified in <code>plot_ly()</code> is global. This means that any additional function will inherit that argument. If you would like to change this, you must set <code>inherit = FALSE</code>.</p>
+<p>Let’s try adding some modifications to your simple examples.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+babydata %&gt;%
+  plot_ly(x = ~sex) %&gt;%
+  add_histogram() %&gt;%
+  group_by(sex) %&gt;%
+  summarise(n = n()) %&gt;%
+  add_text(
+    text = ~scales::comma(n), y = ~n,
+    textposition = &quot;top middle&quot;,
+    cliponaxis = FALSE
+  )</code></pre>
+<div id="htmlwidget-07a10df13bf237c25952" style="width:624px;height:384px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-07a10df13bf237c25952">{"x":{"visdat":{"458c76f15":["function () ","plotlyVisDat"],"458254dcc19":["function () ","data"],"45816929071":["function () ","data"]},"cur_data":"45816929071","attrs":{"458c76f15":{"x":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"histogram","inherit":true},"45816929071":{"x":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"y":{},"text":{},"type":"scatter","mode":"text","textposition":"top middle","cliponaxis":false,"inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"sex","type":"category","categoryorder":"array","categoryarray":["F","M"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"n"},"hovermode":"closest","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"x":["M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M","F","M"],"type":"histogram","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["F","M"],"y":[24,130],"text":["24","130"],"type":"scatter","mode":"text","textposition":["top middle","top middle"],"cliponaxis":false,"marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"line":{"color":"rgba(255,127,14,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<h2 id="some-more-complex-graphics">Some more complex graphics</h2>
+<p>When examining the babynames dataset, using a histogram might not be the best way to represent a greater portion of the data.</p>
+<p>Let’s try some scatter plots!</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+pal &lt;- c(&quot;hot pink&quot;, &quot;blue&quot;)
+
+plot_ly(babydata, x = ~year, y = ~prop, color = ~sex, colors = pal, marker = list(size=5, opacity = 0.5)) %&gt;% 
+  layout(title= &quot;Proportion of baby&#39;s with the name Reece by year&quot;)</code></pre>
+<div id="htmlwidget-c3bcf1dd9e802f9bd244" style="width:624px;height:384px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c3bcf1dd9e802f9bd244">{"x":{"visdat":{"4587155c195":["function () ","plotlyVisDat"]},"cur_data":"4587155c195","attrs":{"4587155c195":{"x":{},"y":{},"marker":{"size":5,"opacity":0.5},"color":{},"colors":["hot pink","blue"],"alpha_stroke":1,"sizes":[10,100],"spans":[1,20]}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Proportion of baby's with the name Reece by year","xaxis":{"domain":[0,1],"automargin":true,"title":"year"},"yaxis":{"domain":[0,1],"automargin":true,"title":"prop"},"hovermode":"closest","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"x":[1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017],"y":[3.08e-06,5.73e-06,1.461e-05,1.781e-05,2.219e-05,4.008e-05,5.113e-05,5.252e-05,7.7e-05,8.976e-05,0.0001086,0.00010749,0.00010866,0.00011963,0.00011726,0.00013248,0.00010315,0.00011421,0.00010226,0.00011695,0.00011119,9.202e-05,9.127e-05,8.48e-05],"marker":{"color":"rgba(255,105,180,1)","size":5,"opacity":0.5,"line":{"color":"rgba(255,105,180,1)"}},"type":"scatter","mode":"markers","name":"F","textfont":{"color":"rgba(255,105,180,1)"},"error_y":{"color":"rgba(255,105,180,1)"},"error_x":{"color":"rgba(255,105,180,1)"},"line":{"color":"rgba(255,105,180,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[1880,1881,1882,1883,1884,1885,1887,1888,1891,1892,1893,1895,1898,1900,1901,1902,1903,1905,1906,1907,1908,1909,1910,1911,1912,1913,1914,1915,1916,1917,1918,1919,1920,1921,1922,1923,1924,1925,1926,1927,1928,1929,1930,1931,1932,1933,1934,1935,1936,1937,1938,1939,1940,1941,1942,1943,1944,1945,1946,1947,1948,1949,1950,1951,1952,1953,1954,1955,1956,1957,1958,1959,1960,1961,1962,1963,1964,1965,1966,1967,1968,1969,1970,1971,1972,1973,1974,1975,1976,1977,1978,1979,1980,1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017],"y":[4.223e-05,8.312e-05,4.917e-05,8.891e-05,4.888e-05,7.762e-05,8.233e-05,5.389e-05,4.576e-05,3.804e-05,4.131e-05,3.948e-05,4.542e-05,3.701e-05,4.325e-05,5.273e-05,5.413e-05,4.189e-05,4.859e-05,3.153e-05,4.208e-05,5.654e-05,4.796e-05,4.557e-05,4.209e-05,4.476e-05,3.366e-05,4.768e-05,5.741e-05,4.482e-05,3.719e-05,4.038e-05,3.27e-05,3.691e-05,4.532e-05,3.797e-05,4.106e-05,3.474e-05,3.928e-05,3.529e-05,4.119e-05,3.612e-05,2.833e-05,4.207e-05,3.072e-05,3.529e-05,3.579e-05,3.647e-05,3.195e-05,2.195e-05,2.552e-05,2.736e-05,2.277e-05,1.913e-05,1.989e-05,1.306e-05,2.304e-05,2.115e-05,1.879e-05,1.723e-05,1.795e-05,1.165e-05,1.319e-05,1.098e-05,1.266e-05,1.799e-05,1.064e-05,1.244e-05,1.212e-05,1.417e-05,1.3e-05,1.339e-05,1.339e-05,9.74e-06,9.04e-06,1.065e-05,1.134e-05,1.741e-05,2.145e-05,1.348e-05,1.745e-05,1.585e-05,1.889e-05,1.98e-05,2.15e-05,1.92e-05,1.042e-05,1.417e-05,1.653e-05,1.579e-05,9.36e-06,1.842e-05,2.21e-05,1.665e-05,2.12e-05,2.254e-05,2.718e-05,3.483e-05,5.57e-05,5.899e-05,7.595e-05,6.681e-05,7.67e-05,7.833e-05,0.00010292,0.00010654,0.00012365,0.00012929,0.00012778,0.0001467,0.00023925,0.00027669,0.00031618,0.0003855,0.00037763,0.00036047,0.00032904,0.00036641,0.0003186,0.00030541,0.00032867,0.00030864,0.000307,0.00030366,0.00027494,0.00025288,0.00025044,0.00024137,0.00023541,0.00023226],"marker":{"color":"rgba(0,0,255,1)","size":5,"opacity":0.5,"line":{"color":"rgba(0,0,255,1)"}},"type":"scatter","mode":"markers","name":"M","textfont":{"color":"rgba(0,0,255,1)"},"error_y":{"color":"rgba(0,0,255,1)"},"error_x":{"color":"rgba(0,0,255,1)"},"line":{"color":"rgba(0,0,255,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<p>This graph shows the proportion of baby’s with the name Reece over the years. The color parameter allows for you to separate variables by color; in this case, it separates the babies by sex. You can also chose the colors you wish to depict them as using the colors parameter. The marker parameter allows you to adjust of the points on the graph. You can adjust the size, color and opacity as shown above. The layout function is how we are able to attach a title to the graph. You can see here that you also have the ability to hover over points in order to get the exact number.</p>
+<h2 id="you-try">You try</h2>
+<p>Make an interactive graph similar to the one above using your own name. Make sure the viewer can see the difference in sex.</p>
+<h2 id="references">References</h2>
+<p><a href="https://plot.ly/feed/#/" class="uri">https://plot.ly/feed/#/</a></p>
+<p>Sievert, C. (2019, April 27). Interactive web-based data visualization with R, plotly, and shiny. Retrieved from <a href="https://plotly-r.com/overview.html" class="uri">https://plotly-r.com/overview.html</a></p>
+<!--radix_placeholder_article_footer-->
+<!--/radix_placeholder_article_footer-->
+</div>
+
+<div class="d-appendix">
+</div>
+
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom"></div>
+<!--/radix_placeholder_appendices-->
+<!--radix_placeholder_navigation_after_body-->
+<!--/radix_placeholder_navigation_after_body-->
+
+</body>
+
+</html>

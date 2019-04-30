@@ -1,5 +1,35 @@
 [
   {
+    "path": "posts/2019-04-30-application/",
+    "title": "Application",
+    "description": "Application of plotly in R.",
+    "author": [
+      {
+        "name": "Natalie Lenberger",
+        "url": "https://nlenberger.github.io/projectblog/"
+      }
+    ],
+    "date": "2019-04-30",
+    "categories": [],
+    "preview": {},
+    "last_modified": "2019-04-30T18:16:05-04:00"
+  },
+  {
+    "path": "posts/2019-04-30-plotly/",
+    "title": "Plotly",
+    "description": "A tutorial on using plotly in R.",
+    "author": [
+      {
+        "name": "Natalie Lenberger",
+        "url": "https://nlenberger.github.io/projectblog/"
+      }
+    ],
+    "date": "2019-04-30",
+    "categories": [],
+    "preview": {},
+    "last_modified": "2019-04-30T18:16:24-04:00"
+  },
+  {
     "path": "posts/2019-04-17-sophisticated-analysis/",
     "title": "Sophisticated Analysis",
     "description": "Analysis of sophisticated things.",

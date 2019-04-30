@@ -1,13 +1,14 @@
 ---
 title: "Application"
 description: |
-  Application of plotly.
+  Application of plotly in R.
 author:
   - name: Natalie Lenberger
     url: https://nlenberger.github.io/projectblog/
-date: 04-17-2019
-output: distill::distill_article:
-  self_contained: false
+date: 04-30-2019
+output:
+  distill::distill_article:
+    self_contained: false
 ---
 
 ```{r setup, include=FALSE}
@@ -51,7 +52,7 @@ This graphic allows for another variable to be shown by changing the size of the
 
 Hey! Maybe we want to add the petal width to the hover text.
 
-```{r}
+```{r preview = TRUE}
 plot_ly(iris, x = ~Petal.Length, y = ~Sepal.Length, text = ~paste("Sepal Length:", Sepal.Length, ",", "Petal Length:", Petal.Length, ",", "Petal Width", Petal.Width), color = ~Species, size = ~Petal.Width)
 ```
 
@@ -62,7 +63,5 @@ You can also depict this data using a histogram!
 plot_ly(iris, x = ~Species, y = ~Sepal.Length, color = I("orange"),
         type = "box")
 ```
-
-
 
 
