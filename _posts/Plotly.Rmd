@@ -63,7 +63,7 @@ For these next few examples, we will look at just the name "Reece" from the baby
 ```{r}
 babydata <- babynames %>% 
   filter(name == "Reece") %>% 
-  select(name, sex) 
+  select(name, sex, year, prop) 
 ```
 
 
@@ -151,18 +151,19 @@ When examining the babynames dataset, using a histogram might not be the best wa
 
 Let's try some scatter plots!
 
-First we must learn more about some specifict parameters. 
-
-  * type- character string which specifies the trace type
-  * color - values mapped to relevant 'fill-color'
-  * stroke - similar to color, bu values are mapped to relevant 
-      'stroke-color'
-  * size - values mapped to relevant 'fill-size'
-
 ```{r}
-plot_ly(babynames, x = ~year, y = ~prop, marker = list(size=10)) %>% 
-  layout(title= "Styled Scatter", yaxis = list(zeroline = FALSE), xaxis = list(zeroline = FALSE))
+pal <- c("hot pink", "blue")
+
+plot_ly(babydata, x = ~year, y = ~prop, color = ~sex, colors = pal, marker = list(size=5, opacity = 0.5)) %>% 
+  layout(title= "Proportion of baby's with the name Reece by year")
 ```
+
+This graph shows the proportion of baby's with the name Reece over the years. The color parameter alows for you to separate variables by color; in this case, it separates the babies by sex. You can also chose the colors you wish to depict them as using the colors parameter. The marker paramter alows you to adjust of the points on the graph. You can adjust the size, color and opacity as shown above. The layout function is how we are able to attach a title to the graph. You can see here that you also have the ability to hover over points in order to get the exact numbner.
+
+## You try
+
+Make an interactive graph similar to the one above using your own name. Make sure the viewer can see the difference in sex. 
+
 
 
 

@@ -1,0 +1,46 @@
+---
+title: "Application"
+description: |
+  Application of plotly.
+author:
+  - name: Natalie Lenberger
+    url: https://nlenberger.github.io/projectblog/
+date: 04-17-2019
+output: distill::distill_article:
+  self_contained: false
+---
+
+```{r setup, include=FALSE}
+library(plotly)
+library(mdsr)
+library(dplyr)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Introduction
+
+On my blog, you will find a brief tutorial for plotly. This analysis post delves deeper into the package and shows an application of the package. In the tutorial, I used the babynames data to show how to build interactive graphics. In this post, I want to use plotly and the iris data set to show differnt types of graphs.
+
+## Analysis
+
+First I want to still use a scatter plot but play around with the mapping techniques and symbols
+
+```{r}
+plot_ly(iris, x = ~Petal.Length, y = ~Sepal.Length, symbol = ~Species, symbols = c("circle", "x"), marker = list(size=5, opacity=0.5))
+```
+
+Now let's maybe look at some boxplots.
+
+```{r}
+plot_ly(iris, x = ~Species, y = ~Sepal.Length, color = I("orange"), type = "box")
+```
+
+What if I want to get more information from my boxplot?
+
+```{r}
+plot_ly(iris, x = ~Species, y = ~Sepal.Length, 
+        color = ~Petal.Length, type = "box") %>% 
+  layout(boxmode = "group")
+```
+
