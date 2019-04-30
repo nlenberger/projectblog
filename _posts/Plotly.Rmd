@@ -30,7 +30,7 @@ This tutorial will teach you about installing and using the package plotly in R.
 
 This tutorial will only cover directly instalizing a plotly object.
 
-In order to adequetly teach you about this package, we will need some data. This tutorial will take you through examples using the babynames data from the packaged babynames.
+In order to adequately teach you about this package, we will need some data. This tutorial will take you through examples using the babynames data from the packaged babynames.
 
 ## Installation
 
@@ -58,7 +58,7 @@ library(plotly)
 `
 When you start to assign variable names to visual properties within `plot_ly()`, it tries to find a sensible geometric representation of the info. 
 
-For these next few examples, we will look at just the name "Reece" from the babynames pakage and keep the graphics basic in order to unsterday what is happening. 
+For these next few examples, we will look at just the name "Reece" from the babynames package and keep the graphics basic in order to understand what is happening. 
 
 
 ```{r}
@@ -91,9 +91,9 @@ plot_ly(babydata, x = ~sex, y = ~prop, color = "red")
 
 ## Modifying `plot_ly` graphics
 
-The plotly package takes a functional approach; modification of a plotly graphic is determined by the inpute values to a function.
+The plotly package takes a functional approach; modification of a plotly graphic is determined by the input values to a function.
 
-In the below graphic, the function `layout()` is anticipating a plotly object for the first argument. The following arguments add or modfy the layout components. 
+In the below graphic, the function `layout()` is anticipating a plotly object for the first argument. The following arguments add or modify the layout components. 
 
 ```{r, knitr::opts_chunk$set(echo = FALSE}
 layout(
@@ -102,7 +102,7 @@ layout(
 )
 ```
 
-This could start to get out of hand when you start wanting to make numerous modifications. For that reason, the pipe operator, `%>%`, should be used when making modifcations. This will also make it easier for other people to follow. 
+This could start to get out of hand when you start wanting to make numerous modifications. For that reason, the pipe operator, `%>%`, should be used when making modifications. This will also make it easier for other people to follow. 
 
 ```{r}
 babydata %>% 
@@ -122,7 +122,7 @@ A few of these include:
  * `add_paths()`
 ....and many more!
  
-For most graphics you create, you will want to combain several of these graphical layers. When doing that, keep in mind that any argument specified in `plot_ly()` is global. This means that any additional function will inherit that argument. If you would like to change this, you must set `inherit = FALSE`. 
+For most graphics you create, you will want to combine several of these graphical layers. When doing that, keep in mind that any argument specified in `plot_ly()` is global. This means that any additional function will inherit that argument. If you would like to change this, you must set `inherit = FALSE`. 
 
 
 Let's try adding some modifications to your simple examples.
@@ -154,7 +154,7 @@ plot_ly(babydata, x = ~year, y = ~prop, color = ~sex, colors = pal, marker = lis
   layout(title= "Proportion of baby's with the name Reece by year")
 ```
 
-This graph shows the proportion of baby's with the name Reece over the years. The color parameter alows for you to separate variables by color; in this case, it separates the babies by sex. You can also chose the colors you wish to depict them as using the colors parameter. The marker paramter alows you to adjust of the points on the graph. You can adjust the size, color and opacity as shown above. The layout function is how we are able to attach a title to the graph. You can see here that you also have the ability to hover over points in order to get the exact numbner.
+This graph shows the proportion of baby's with the name Reece over the years. The color parameter allows for you to separate variables by color; in this case, it separates the babies by sex. You can also chose the colors you wish to depict them as using the colors parameter. The marker parameter allows you to adjust of the points on the graph. You can adjust the size, color and opacity as shown above. The layout function is how we are able to attach a title to the graph. You can see here that you also have the ability to hover over points in order to get the exact number.
 
 ## You try
 
