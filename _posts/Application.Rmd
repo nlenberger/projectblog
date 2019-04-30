@@ -20,27 +20,49 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Introduction
 
-On my blog, you will find a brief tutorial for plotly. This analysis post delves deeper into the package and shows an application of the package. In the tutorial, I used the babynames data to show how to build interactive graphics. In this post, I want to use plotly and the iris data set to show differnt types of graphs.
+On my blog, you will find a brief tutorial for plotly. This analysis post delves deeper into the package and shows an application of the package. In the tutorial, I used the babynames data to show how to build interactive graphics. In this post, I want to use plotly and the iris data set to show more intricate adn difficult graphs.
 
 ## Analysis
 
-First I want to still use a scatter plot but play around with the mapping techniques and symbols
+First, I want to play around with the mapping techniques.
 
 ```{r}
 plot_ly(iris, x = ~Petal.Length, y = ~Sepal.Length, symbol = ~Species, symbols = c("circle", "x"), marker = list(size=5, opacity=0.5))
 ```
+This graph not only maps the different species to a color, but also to different symbols. This could be beneficial for someone who is color blind. 
 
-Now let's maybe look at some boxplots.
 
-```{r}
-plot_ly(iris, x = ~Species, y = ~Sepal.Length, color = I("orange"), type = "box")
-```
-
-What if I want to get more information from my boxplot?
+Now, I will play around with the hover data lables.
 
 ```{r}
-plot_ly(iris, x = ~Species, y = ~Sepal.Length, 
-        color = ~Petal.Length, type = "box") %>% 
-  layout(boxmode = "group")
+plot_ly(iris, x = ~Petal.Length, y = ~Sepal.Length, text = ~paste("Sepal Length:", Sepal.Length, ",", "Petal Length:", Petal.Length), color = ~Species)
 ```
+
+For some graphcis, you might want the viewer to know what exact values they are looking at, for each point. 
+
+
+Same thing, but let's see if we can adjust the points based off a variable
+
+```{r}
+plot_ly(iris, x = ~Petal.Length, y = ~Sepal.Length, text = ~paste("Sepal Length:", Sepal.Length, ",", "Petal Length:", Petal.Length), color = ~Species, size = ~Petal.Width)
+```
+
+This graphic allows for another variable to be shown by changing the size of the points base on the width of the petal. 
+
+Hey! Maybe we want to add the petal width to the hover text.
+
+```{r}
+plot_ly(iris, x = ~Petal.Length, y = ~Sepal.Length, text = ~paste("Sepal Length:", Sepal.Length, ",", "Petal Length:", Petal.Length, ",", "Petal Width", Petal.Width), color = ~Species, size = ~Petal.Width)
+```
+
+
+You can also depict this data using a histogram! 
+
+```{r}
+plot_ly(iris, x = ~Species, y = ~Sepal.Length, color = I("orange"),
+        type = "box")
+```
+
+
+
 
