@@ -30,7 +30,7 @@ This tutorial will teach you about installing and using the package plotly in R.
 
 This tutorial will only cover directly instalizing a plotly object.
 
-In order to adequately teach you about this package, we will need some data. This tutorial will take you through examples using the babynames data from the packaged babynames.
+In order to adequately teach you about this package, we will need some data. This tutorial will take you through examples using the babynames data from the package babynames.
 
 ## Installation
 
@@ -40,8 +40,6 @@ This can be done using the following code:
 
 `install.packages("plotly")`
 
-
-In order to learn about
 
 You might also want to install the package babynames in order to follow along with these examples. Or, if you have your own data you want to apply these examples to, that is fine as well.
 
@@ -62,33 +60,55 @@ When you start to assign variable names to visual properties within `plot_ly()`,
 
 For these next few examples, we will look at just the name "Reece" from the babynames package and keep the graphics basic in order to understand what is happening. 
 
-
 ```{r}
 babydata <- babynames %>% 
   filter(name == "Reece") %>% 
-  select(name, sex, year, prop) 
+  select(name, sex, year, prop) %>% 
+rmarkdown::paged_table()
 ```
-
 
 ```{r}
 plot_ly(babydata, x = ~sex)
 ```
 
+The geometric representation `plot_ly()` assigned to this data is a histogram. When this is done, it simply counts up the number of years for each sex in which the name appeared.
+
+Instead, we should maybe generate a bar plot. The next example involves some modifications in which you might want to read the next section to learn more about.
 
 ```{r}
-plot_ly(babydata, x = ~sex, y = ~prop)
+babynames %>% 
+  filter(name == "Reece") %>% 
+  group_by(sex) %>% 
+  summarize(tally = sum(n)) %>% 
+  plot_ly() %>% 
+  add_bars(x = ~ sex, y = ~ tally)
 ```
+
+This graph is showing the total number of female babies and total number of male babies that had the name "Reece." 
+
 
 You can then begin to manipulate the graphic by changing the color
 
 ```{r}
-plot_ly(babydata, x = ~sex, y = ~prop, color= I("red"), stroke = I("black"))
+babynames %>% 
+  filter(name == "Reece") %>% 
+  group_by(sex) %>% 
+  summarize(tally = sum(n)) %>% 
+  plot_ly() %>% 
+  add_bars(x = ~ sex, y = ~ tally, 
+        color= I("red"), stroke = I("black"))
 ```
 
 Without the `I()` function, you will not obtain expect/desired results. This is because the arguments map data values to a visual range by default. 
 
 ```{r}
-plot_ly(babydata, x = ~sex, y = ~prop, color = "red")
+babynames %>% 
+  filter(name == "Reece") %>% 
+  group_by(sex) %>% 
+  summarize(tally = sum(n)) %>% 
+  plot_ly() %>% 
+  add_bars(x = ~ sex, y = ~ tally, 
+        color = "red")
 ```
 
 ## Modifying `plot_ly` graphics
@@ -99,17 +119,26 @@ In the below graphic, the function `layout()` is anticipating a plotly object fo
 
 ```{r}
 layout(
-  plot_ly(babydata, x = ~sex),
-  title = "Histogram for the name Reece"
+ babynames %>% 
+  filter(name == "Reece") %>% 
+  group_by(sex) %>% 
+  summarize(tally = sum(n)) %>% 
+  plot_ly() %>% 
+  add_bars(x = ~ sex, y = ~ tally),
+  title = "Bar Plot for the name Reece"
 )
 ```
 
 This could start to get out of hand when you start wanting to make numerous modifications. For that reason, the pipe operator, `%>%`, should be used when making modifications. This will also make it easier for other people to follow. 
 
 ```{r}
-babydata %>% 
-  plot_ly(x = ~sex) %>% 
-  layout(title = "Histogram for the name Reece")
+babynames %>% 
+  filter(name == "Reece") %>% 
+  group_by(sex) %>% 
+  summarize(tally = sum(n)) %>% 
+  plot_ly() %>% 
+  add_bars(x = ~ sex, y = ~ tally) %>% 
+  layout(title = "Bar Plot for the name Reece")
 ```
 
 There are several other modification functions that can be used in the plotly package in order to add a graphical layer to a plot. 
@@ -120,40 +149,47 @@ A few of these include:
  * `add_lines()`
  * `add_text()`
  * `add_boxplot()`
- * `add_markers()
+ * `add_markers()`
  * `add_paths()`
 ....and many more!
  
 For most graphics you create, you will want to combine several of these graphical layers. When doing that, keep in mind that any argument specified in `plot_ly()` is global. This means that any additional function will inherit that argument. If you would like to change this, you must set `inherit = FALSE`. 
 
+In the previous section we saw a histrogram which we then changed into a bar plot. The differenct between the `add_histogram()` and `add_bars()` is: `add_histogram()` does statistical analysis in the web browser while `add_bars()` requires the bar heights to be pre-specified.
 
 Let's try adding some modifications to your simple examples.
 
 ```{r}
-babydata %>%
-  plot_ly(x = ~sex) %>%
-  add_histogram() %>%
-  group_by(sex) %>%
-  summarise(n = n()) %>%
+babynames %>% 
+  filter(name == "Reece") %>% 
+  group_by(sex) %>% 
+  summarize(tally = sum(n)) %>% 
+  plot_ly(x = ~sex, y = ~tally, text = ~tally) %>% 
+  add_bars(x = ~sex, y = ~tally) %>%
   add_text(
-    text = ~scales::comma(n), y = ~n,
+    text = ~tally,
     textposition = "top middle",
     cliponaxis = FALSE
-  )
+  ) %>% 
+  layout(title = "Bar Plot for the name Reece")
 ```
 
+This graph adds text to the top of each bar showing the exact number for each variable.
 
 ## Some more complex graphics
 
-When examining the babynames dataset, using a histogram might not be the best way to represent a greater portion of the data. 
+When examining the babynames dataset, using a bar plot might not be the best way to represent a greater portion of the data. 
 
 Let's try some scatter plots!
 
 ```{r preview = TRUE}
 pal <- c("hot pink", "blue")
 
-plot_ly(babydata, x = ~year, y = ~prop, color = ~sex, colors = pal, marker = list(size=5, opacity = 0.5)) %>% 
-  layout(title= "Proportion of baby's with the name Reece by year")
+plot_ly(babydata, x = ~year, y = ~prop, 
+        color = ~sex, colors = pal, 
+        marker = list(size=5, opacity = 0.5)) %>% 
+  layout(title= "Proportion of baby's with the
+         name Reece by year")
 ```
 
 This graph shows the proportion of baby's with the name Reece over the years. The color parameter allows for you to separate variables by color; in this case, it separates the babies by sex. You can also chose the colors you wish to depict them as using the colors parameter. The marker parameter allows you to adjust of the points on the graph. You can adjust the size, color and opacity as shown above. The layout function is how we are able to attach a title to the graph. You can see here that you also have the ability to hover over points in order to get the exact number.
